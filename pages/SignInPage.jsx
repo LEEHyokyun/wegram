@@ -6,6 +6,15 @@ import ItemInput from '../components/ItemInput';
 import { signIn } from '../config/firebaseFunctions';
 import * as firebase from 'firebase';
 import Loading from '../pages/Loading';
+
+import {
+  setTestDeviceIDAsync,
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded,
+} from 'expo-ads-admob';
+
 export default function SignInPage({ navigation }) {
   const [ready, setReady] = useState(false);
 
@@ -95,6 +104,23 @@ export default function SignInPage({ navigation }) {
           <Button full style={styles.emailSignUp} onPress={goSignUp}>
             <Text style={{ color: '#333' }}>회원가입</Text>
           </Button>
+          <Form style={styles.banner}>
+            {Platform.OS === 'ios' ? (
+              <AdMobBanner
+                bannerSize="fullBanner"
+                servePersonalizedAds={true}
+                adUnitID="ca-app-pub-2521868996473895/6801812889"
+                style={styles.banner}
+              />
+            ) : (
+              <AdMobBanner
+                bannerSize="fullBanner"
+                servePersonalizedAds={true}
+                adUnitID="ca-app-pub-2521868996473895/8764781188"
+                style={styles.banner}
+              />
+            )}
+          </Form>
         </Content>
       </ImageBackground>
     </Container>
@@ -130,6 +156,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   form: {
+    width: 250,
+    borderRadius: 10,
+    paddingBottom: 20,
+    paddingRight: 20,
+    paddingLeft: 20,
+    marginTop: 10,
+  },
+  banner: {
     width: 250,
     borderRadius: 10,
     paddingBottom: 20,
